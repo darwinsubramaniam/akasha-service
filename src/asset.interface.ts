@@ -1,3 +1,3 @@
 export interface Asset{
-    name:string;
+  name: string
 }

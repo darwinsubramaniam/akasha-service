@@ -1,5 +1,5 @@
 export interface DefiActivity {
-    network : string;
-    address : string;
-    fee : number;
+  network: string
+  address: string
+  fee: number
 }

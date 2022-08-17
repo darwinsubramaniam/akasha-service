@@ -1,10 +1,10 @@
-import { Asset } from "src/asset.interface";
-import { DefiActivity } from "./defiactivity.interface";
+import { Asset } from 'src/asset.interface'
+import { DefiActivity } from './defiactivity.interface'
 
 export interface Staking extends DefiActivity {
-    asset: Asset;
-    amount: number;
-    startDate: Date;
-    cooldownPeriod: number;
-    endDate?: Date;
+  asset: Asset
+  amount: number
+  startDate: Date
+  cooldownPeriod: number
+  endDate?: Date
 }
