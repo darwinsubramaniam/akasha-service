@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
 
 async function bootstrap () {
@@ -16,6 +16,9 @@ const swaggerSetup = (app: INestApplication) => {
     .setDescription('The Crypto tracking and management API')
     .setVersion('1.0')
     .build();
+    const options: SwaggerCustomOptions = {
+      customSiteTitle: 'Akasha',
+    }
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, options);
 }
