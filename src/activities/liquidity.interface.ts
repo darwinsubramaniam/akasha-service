@@ -1,4 +1,4 @@
-import { Asset } from 'src/asset.interface'
+import { IAsset } from '../asset/asset.interface'
 import { DefiActivity } from './defiactivity.interface'
 
 /**
@@ -15,11 +15,11 @@ export interface Liquidity extends DefiActivity {
 
 interface AssetPair {
   base: {
-    asset: Asset
+    asset: IAsset
     amount: number
   }
   quote: {
-    asset: Asset
+    asset: IAsset
     amount: number
   }
 }

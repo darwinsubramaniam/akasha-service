@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+
+  # api:
+  #   image: node:latest
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/app
+  #   command: sleep infinity
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=user
+      
+      - POSTGRES_DB=akasha
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

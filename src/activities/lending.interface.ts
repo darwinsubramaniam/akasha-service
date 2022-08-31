@@ -1,8 +1,8 @@
-import { Asset } from 'src/asset.interface'
+import { IAsset } from 'src/asset/asset.interface'
 import { DefiActivity } from './defiactivity.interface'
 
 export interface Lending extends DefiActivity {
-  asset: Asset
+  asset: IAsset
   amount: number
   apy: number
   startDate: Date

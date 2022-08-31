@@ -1,8 +1,10 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { Cron, CronExpression } from "@nestjs/schedule";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions } from "typeorm";
 import { Repository } from "typeorm/repository/Repository";
 import { FiatConversion } from "./conversion.entity";
+import { Fiat } from "./fiat.entity";
 import {
   Conversion as FixerApiConversion,
   FixerApiService,
@@ -15,6 +17,7 @@ export class FiatService {
   constructor(
     private fixerApi: FixerApiService,
     @InjectRepository(FiatConversion) private readonly repo: Repository<FiatConversion>,
+    @InjectRepository(Fiat) private readonly fiatRepo: Repository<Fiat>
   ) {}
 
   public async convert(
@@ -55,6 +58,18 @@ export class FiatService {
       to,
     );
     return curretnRate;
+  }
+
+  @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_MIDNIGHT)
+  public async populate_all_fiat(){
+    let symbols = await this.fixerApi.getSymbols()
+    if(symbols.success){
+      for (const symbol in symbols.symbols) {
+        const name = symbols.symbols[symbol]
+        await this.fiatRepo.save({name , symbol})
+      }
+    }
+    return symbols;
   }
 
   async is_data_fresh(conversion: FiatConversion) {

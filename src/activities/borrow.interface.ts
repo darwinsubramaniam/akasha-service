@@ -1,11 +1,11 @@
 import { DefiActivity } from './defiactivity.interface'
-import { Asset } from '../asset.interface'
+import { IAsset } from '../asset/asset.interface'
 
 /**
  * Borrow asset activity
  */
 export interface Borrow extends DefiActivity {
-  asset: Asset
+  asset: IAsset
   amount: number
   interestRate: number
   startDate: Date

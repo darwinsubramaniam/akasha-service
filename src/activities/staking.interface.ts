@@ -1,8 +1,9 @@
-import { Asset } from 'src/asset.interface'
+
+import { IAsset } from 'src/asset/asset.interface'
 import { DefiActivity } from './defiactivity.interface'
 
 export interface Staking extends DefiActivity {
-  asset: Asset
+  asset: IAsset
   amount: number
   startDate: Date
   cooldownPeriod: number
