@@ -1,10 +1,11 @@
 import { HttpService } from "@nestjs/axios";
 import { Injectable, Logger } from "@nestjs/common";
-import { concatMap, debounce, delay, firstValueFrom, from, interval, map, mergeMap, switchMap, tap } from "rxjs";
+import {
+  firstValueFrom,
+} from "rxjs";
 
 @Injectable()
 export class CoingeckoService {
-  private log = new Logger(CoingeckoService.name);
   public readonly PLATFORM_NAME = "CoinGecko";
   constructor(private httpService: HttpService) {}
 
@@ -16,14 +17,14 @@ export class CoingeckoService {
       .get<CoinGeckoCryptoBasic[]>(
         "https://api.coingecko.com/api/v3/coins/list",
       ));
-      const listOfAssets = response.data;
-      return listOfAssets.map(asset => {
-        const result: CoinGeckoCryptoBasic = {
-          ...asset,
-          platform: this.PLATFORM_NAME,
-        }
-        return result;
-      });
+    const listOfAssets = response.data;
+    return listOfAssets.map((asset) => {
+      const result: CoinGeckoCryptoBasic = {
+        ...asset,
+        platform: this.PLATFORM_NAME,
+      };
+      return result;
+    });
   }
 
   /**
@@ -32,12 +33,12 @@ export class CoingeckoService {
    * @returns image urls
    */
   public async fetchCryptoImage(id: string) {
-      let response = await firstValueFrom(
-        this.httpService.get<CoinGeckCoinImageInfo>(
-          `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=true&sparkline=false`
-        )
-      );
-      return response.data;
+    let response = await firstValueFrom(
+      this.httpService.get<CoinGeckCoinImageInfo>(
+        `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=true&sparkline=false`,
+      ),
+    );
+    return response.data;
   }
 }
 

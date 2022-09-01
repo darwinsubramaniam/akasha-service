@@ -2,9 +2,6 @@ import { INestApplication } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { AssetService } from './asset/asset.service'
-import { CoingeckoService } from './asset/crypto_api/coingecko.service'
-import { FiatService } from './conversion/fiat/fiat.service'
 
 async function bootstrap () {
   const app = await NestFactory.create(AppModule)

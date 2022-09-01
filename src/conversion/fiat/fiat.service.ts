@@ -16,8 +16,10 @@ export class FiatService {
 
   constructor(
     private fixerApi: FixerApiService,
-    @InjectRepository(FiatConversion) private readonly repo: Repository<FiatConversion>,
-    @InjectRepository(Fiat) private readonly fiatRepo: Repository<Fiat>
+    @InjectRepository(FiatConversion) private readonly repo: Repository<
+      FiatConversion
+    >,
+    @InjectRepository(Fiat) private readonly fiatRepo: Repository<Fiat>,
   ) {}
 
   public async convert(
@@ -60,13 +62,20 @@ export class FiatService {
     return curretnRate;
   }
 
+  public async get_fiat_symbols() {
+    return (await this.fiatRepo.find())
+      .map((fiat) => {
+        return { symbol: fiat.symbol, name: fiat.name };
+      });
+  }
+
   @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_MIDNIGHT)
-  public async populate_all_fiat(){
-    let symbols = await this.fixerApi.getSymbols()
-    if(symbols.success){
+  public async populate_all_fiat() {
+    let symbols = await this.fixerApi.getSymbols();
+    if (symbols.success) {
       for (const symbol in symbols.symbols) {
-        const name = symbols.symbols[symbol]
-        await this.fiatRepo.save({name , symbol})
+        const name = symbols.symbols[symbol];
+        await this.fiatRepo.save({ name, symbol });
       }
     }
     return symbols;
