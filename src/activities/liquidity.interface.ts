@@ -1,4 +1,4 @@
-import { IAsset } from '../asset/asset.interface'
+import { IAsset } from '../modules/public/asset/asset.interface'
 import { DefiActivity } from './defiactivity.interface'
 
 /**

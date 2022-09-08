@@ -37,3 +37,6 @@ lerna-debug.log*
 .env
 db.sqlite
 /db_volume
+environment/dev.env
+environment/prod.env
+environment/qa.env
