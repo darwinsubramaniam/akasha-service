@@ -13,10 +13,23 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: DEV
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          # must specify password for PG Docker container image, see: https://registry.hub.docker.com/_/postgres?tab=description&page=1&name=10
+          POSTGRES_PASSWORD: "{{secret.DB_PASSWORD}}"
+          POSTGRES_DB: "{{secret.DB_DATABASE}}"
+          POSTGRES_USER: "{{secret.DB_USERNAME}}"
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:

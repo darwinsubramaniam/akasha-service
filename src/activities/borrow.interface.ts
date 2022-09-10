@@ -1,5 +1,5 @@
 import { DefiActivity } from './defiactivity.interface'
-import { IAsset } from '../modules/public/asset/asset.interface'
+import { IAsset } from '../modules/asset/asset.interface'
 
 /**
  * Borrow asset activity

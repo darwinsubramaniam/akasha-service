@@ -1,8 +1,8 @@
 import { DatabaseService } from '../database/database.service';
-import { UserService } from '../modules/public/user/user.service';
+import { UserService } from '../modules/user/user.service';
 import { DataSource } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { User } from 'src/modules/public/user/user.entity';
+import { User } from 'src/entities/public/user.entity';
 
 export async function getTenantConnection(
   wallet: string,
@@ -13,7 +13,7 @@ export async function getTenantConnection(
   let user = await userService.get(wallet);
 
   if (!user) {
-    throw new Error(`Wallet not registered`);
+    return null;
   }
 
   connectionName = getConnectionName(user);

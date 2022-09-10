@@ -29,7 +29,7 @@ export class DatabaseService implements TypeOrmOptionsFactory {
             schema: this.config.schema,
             synchronize: this.config.synchronize,
             namingStrategy: new SnakeNamingStrategy(),
-            entities: [join(__dirname, `../modules/public/**/*.entity{.ts,.js}`)],
+            entities: [join(__dirname, `../entities/public/**/*.entity{.ts,.js}`)],
             migrations: [join(__dirname,  `../migrations/public/*{.ts,.js}`)],
         };
     }
@@ -37,8 +37,9 @@ export class DatabaseService implements TypeOrmOptionsFactory {
     public tenantTypeOrmOptions(): TypeOrmModuleOptions {
         return {
             ...this.default(),
-            entities: [join(__dirname, `../modules/tenanted/**/*.entity{.ts,.js}`)],
-            migrations: [join(__dirname, `../migrations/tenanted/*{.ts,.js}`)],
+            autoLoadEntities: true,
+            entities: [join(__dirname, `../entities/private/**/*.entity{.ts,.js}`)],
+            migrations: [join(__dirname, `../migrations/private/*{.ts,.js}`)],
         };
     }
 

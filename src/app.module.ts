@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { InvestModule } from './modules/tenanted/invest/invest.module'
-import { ConversionModule } from './modules/public/conversion/conversion.module'
+import { InvestModule } from './modules/invest/invest.module'
+import { ConversionModule } from './modules/conversion/conversion.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { DefiModule } from './modules/tenanted/defi/defi.module';
-import { AssetModule } from './modules/public/asset/asset.module';
+import { DefiModule } from './modules/defi/defi.module';
+import { AssetModule } from './modules/asset/asset.module';
 import { ScheduleModule } from '@nestjs/schedule'
 import { join } from 'path'
-import { UserModule } from './modules/public/user/user.module';
+import { UserModule } from './modules/user/user.module';
 import { DatabaseService } from './database/database.service'
 import { DatabaseModule } from './database/database.module'
 import databaseConfig from './database/database.config'
-import { Web3AuthModule } from './modules/public/web3Auth/web3Auth.module';
-import { Web3AuthGuard } from './modules/public/web3Auth/web3Auth.guard';
+import { Web3AuthModule } from './modules/web3Auth/web3Auth.module';
+import { Web3AuthGuard } from './modules/web3Auth/web3Auth.guard';
 import appConfig from './app.config';
 import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
 require(`dotenv`).config();
 
 
@@ -27,8 +28,6 @@ require(`dotenv`).config();
       inject: [ConfigService, DatabaseService],
       useClass: DatabaseService,
     }),
-    InvestModule,
-    ConversionModule,
     ConfigModule.forRoot({
       envFilePath: process.env.APP_ENV === `dev` ?
         join(process.cwd(), `environment`, `dev.env`) :
@@ -41,11 +40,13 @@ require(`dotenv`).config();
     AssetModule,
     ScheduleModule.forRoot(),
     UserModule,
+    InvestModule,
+    ConversionModule,
     Web3AuthModule
   ],
   controllers: [],
   providers: [{
-    provide: `APP_GUARD`,
+    provide: APP_GUARD,
     useClass: Web3AuthGuard,
   }, AppService]
 })
