@@ -1,5 +1,5 @@
 
-import { IAsset } from 'src/asset/asset.interface'
+import { IAsset } from 'src/modules/public/asset/asset.interface'
 import { DefiActivity } from './defiactivity.interface'
 
 export interface Staking extends DefiActivity {

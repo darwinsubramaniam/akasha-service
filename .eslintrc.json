@@ -18,5 +18,6 @@
         "@darraghor/nestjs-typed"
     ],
     "rules": {
+        "quotes": [2, "backtick", { "avoidEscape": true }]
     }
 }

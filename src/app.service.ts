@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common'
+import { Inject } from "@nestjs/common";
+import { ConfigType } from "@nestjs/config";
+import appConfig from "./app.config";
 
-@Injectable()
-export class AppService {
-  getHello (): string {
-    return 'Hello World!'
-  }
+export class AppService{
+    constructor(@Inject(appConfig.KEY) private readonly config: ConfigType< typeof appConfig> ) {
+
+    }
+    get cookieSecret() {
+        return this.config.cookieSecret;
+    }
 }
