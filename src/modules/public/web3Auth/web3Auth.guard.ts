@@ -13,17 +13,20 @@ export class Web3AuthGuard implements CanActivate{
   constructor(private reflector: Reflector) {
   }
 
+  /**
+   * enable the user to login with web3 
+   * @param context 
+   * @returns 
+   */
   canActivate(context: ExecutionContext) {
-    // Add your custom authentication logic here
-    // for example, call super.logIn(request) to establish a session.
     console.log(context.switchToHttp().getRequest().headers);
 
     if (this.isRegistrationRequest(context)) {
        return true
     }
-    const wallet = context.switchToHttp().getRequest().wallet;
-    const signature = context.switchToHttp().getRequest().signature;
-    const message = context.switchToHttp().getRequest().message;
+    const wallet = context.switchToHttp().getRequest().headers.wallet;
+    const signature = context.switchToHttp().getRequest().headers.signature;
+    const message = context.switchToHttp().getRequest().headers.message;
     if(!wallet || !signature || !message) {
         throw new UnauthorizedException();
     }

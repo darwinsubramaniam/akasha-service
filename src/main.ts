@@ -4,11 +4,13 @@ import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/sw
 import { AppModule } from './app.module'
 import { AuthorizedWalletMiddleware } from './tenancy/tenancy.middleware'
 import *  as cookieParser from 'cookie-parser'
+import { AppService } from './app.service'
 
 async function bootstrap () {
   const app = await NestFactory.create(AppModule)
   swaggerSetup(app);
-  app.use(cookieParser());
+  let cookieSecret = app.get(AppService).cookieSecret;
+  app.use(cookieParser(cookieSecret));
   app.use(AuthorizedWalletMiddleware)
   await app.listen(3000)
 }

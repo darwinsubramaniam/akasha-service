@@ -13,7 +13,11 @@ import { DatabaseModule } from './database/database.module'
 import databaseConfig from './database/database.config'
 import { Web3AuthModule } from './modules/public/web3Auth/web3Auth.module';
 import { Web3AuthGuard } from './modules/public/web3Auth/web3Auth.guard';
+import appConfig from './app.config';
+import { AppService } from './app.service';
 require(`dotenv`).config();
+
+
 
 @Module({
   imports: [
@@ -30,7 +34,9 @@ require(`dotenv`).config();
         join(process.cwd(), `environment`, `dev.env`) :
         join(process.cwd(), `environment`, `prod.env`),
       isGlobal: true,
+      cache: true,
     }),
+    ConfigModule.forFeature(appConfig),
     DefiModule,
     AssetModule,
     ScheduleModule.forRoot(),
@@ -41,6 +47,6 @@ require(`dotenv`).config();
   providers: [{
     provide: `APP_GUARD`,
     useClass: Web3AuthGuard,
-  }]
+  }, AppService]
 })
 export class AppModule {}

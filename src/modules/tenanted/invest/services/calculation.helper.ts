@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FiatService } from 'src/modules/public/conversion/fiat/fiat.service';
+import { FiatService } from '../../../../modules/public/conversion/fiat/fiat.service';
 import { InvestBaseEntity } from '../entity/invest.base';
 
 @Injectable()

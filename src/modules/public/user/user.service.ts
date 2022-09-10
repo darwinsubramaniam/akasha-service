@@ -1,11 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { DatabaseService } from '../../../database/database.service';
 import {
     getConnectionName,
-    getTenantConnection,
 } from '../../../tenancy/tenancy.utils';
-import { DataSource, DeleteResult, FindOneOptions, Repository } from 'typeorm';
+import { DataSource, DeleteResult, FindOneOptions } from 'typeorm';
 import { User } from './user.entity';
 import { RegisterLoginUserDTO } from './createUser.dto';
 
@@ -51,10 +49,6 @@ export class UserService {
         }
     }
 
-    login(user: RegisterLoginUserDTO): Partial<User> | PromiseLike<Partial<User>> {
-        return {wallet: user.wallet, type: user.type};
-      }
-
     private async createSchema(user: User): Promise<void> {
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
@@ -95,7 +89,8 @@ export class UserService {
             throw new HttpException(`Wallet not registered`, HttpStatus.NOT_FOUND);
         }
         const connectionName = getConnectionName(user);
-        await queryRunner.manager.query(`DROP SCHEMA ${connectionName} CASCADE`);
+        const schemaDeleteResult = await queryRunner.manager.query(`DROP SCHEMA IF EXISTS ${connectionName} CASCADE`);
+        console.log(schemaDeleteResult);
         const deleteResult = await queryRunner.manager.delete<User>(User, { wallet: wallet });
         await queryRunner.release();
         return deleteResult;

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConversionModule } from 'src/modules/public/conversion/conversion.module';
+import { ConversionModule } from '../../../modules/public/conversion/conversion.module';
 import { DepositService } from './services/deposit.service';
 import { Deposit } from './entity/deposit.entity';
 import { WithdrawService } from './services/withdraw.service';

@@ -1,5 +1,4 @@
 import { registerAs } from '@nestjs/config';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export default registerAs(`postgres`, () => ({
     host: process.env.DB_HOST,

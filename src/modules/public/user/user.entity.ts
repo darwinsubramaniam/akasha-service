@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from 'src/app_base.entity';
+import { BaseEntity } from '../../../app_base.entity';
 import { Column, Entity, Unique } from 'typeorm';
 
 @Entity({ schema: `public` })
